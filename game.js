@@ -25,13 +25,13 @@ let gravity = 0.4;
 let score = 0;
 let obstacles = [];
 let obstacleSpeed = 2;
-let gameSpeedIncrement = 0.01;
+let gameSpeedIncrement = 0.09;
 let gameOver = false;
 let jumpBoost = -10;
 let canDoubleJump = true;
 
 // Adjust horse and obstacle size based on screen width
-let horseSize = canvas.width < 500 ? 60 : 80;
+let horseSize = canvas.width < 250 ? 30 : 40;
 let obstacleSize = canvas.width < 500 ? 20 : 30;
 
 // Jump function to support both desktop and mobile controls
