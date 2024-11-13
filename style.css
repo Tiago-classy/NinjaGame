@@ -10,8 +10,8 @@ body, html {
 .game-container {
   position: relative;
   width: 90%;
-  max-width: 800px;
-  aspect-ratio: 4 / 2; /* Maintain a consistent aspect ratio */
+  max-width: 1000px; /* Increased max-width for larger desktop display */
+  aspect-ratio: 4 / 2;
   border: 2px solid #333;
 }
 
