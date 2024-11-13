@@ -1,3 +1,4 @@
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -15,7 +16,6 @@ horseImg.src = 'assets/horse.jpg'; // Replace with your horse image
 const obstacleImg = new Image();
 obstacleImg.src = 'assets/obstacle.avif'; // Replace with your obstacle image
 
-
 // Game variables
 let horseX = canvas.width * 0.1;
 let horseY = canvas.height - 80;
@@ -32,7 +32,7 @@ let canDoubleJump = true;
 
 // Adjust horse and obstacle size based on screen width
 let horseSize = canvas.width < 500 ? 60 : 80;
-let obstacleSize = canvas.width < 500 ? 30 : 40;
+let obstacleSize = canvas.width < 500 ? 20 : 30;
 
 // Jump function to support both desktop and mobile controls
 function jump() {
@@ -92,6 +92,7 @@ function updateObstacles() {
     ) {
       gameOver = true;
       document.getElementById('restartButton').style.display = 'block';
+      document.getElementById('fullExperienceButton').style.display = 'block';
       return;
     }
   }
@@ -135,6 +136,7 @@ function restartGame() {
   jumpBoost = -10;
   canDoubleJump = true;
   document.getElementById('restartButton').style.display = 'none';
+  document.getElementById('fullExperienceButton').style.display = 'none';
   gameLoop();
 }
 

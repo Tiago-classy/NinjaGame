@@ -10,7 +10,7 @@ body, html {
 .game-container {
   position: relative;
   width: 90%;
-  max-width: 1000px; /* Increased max-width for larger desktop display */
+  max-width: 1200px;
   aspect-ratio: 4 / 2;
   border: 2px solid #333;
 }
@@ -20,16 +20,23 @@ canvas {
   height: 100%;
 }
 
-#restartButton {
+#restartButton, #fullExperienceButton {
   display: none;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px 20px;
   font-size: 18px;
   background-color: #333;
   color: white;
+  text-align: center;
   border: none;
   cursor: pointer;
+  text-decoration: none;
+}
+
+#fullExperienceButton {
+  top: 65%; /* Position it slightly below the restart button */
+  background-color: #555; /* Differentiated color for the "full experience" button */
 }
