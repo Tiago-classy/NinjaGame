@@ -4,16 +4,20 @@ body, html {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background: #f0f0f0; /* Slightly off-white for visual comfort */
+  background: #f0f0f0;
 }
 
 .game-container {
   position: relative;
+  width: 90%; /* Make the game responsive */
+  max-width: 800px;
+  aspect-ratio: 4 / 2; /* Maintain the aspect ratio */
   border: 2px solid #333;
 }
 
 canvas {
-  background-color: white;
+  width: 100%; /* Scale canvas to fit container */
+  height: 100%;
 }
 
 #restartButton {

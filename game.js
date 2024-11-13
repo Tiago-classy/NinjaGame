@@ -1,15 +1,25 @@
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Load images
+// Dynamically set canvas dimensions to match container
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+
 const horseImg = new Image();
 horseImg.src = 'assets/horse.jpg'; // Replace with your horse image
 const obstacleImg = new Image();
 obstacleImg.src = 'assets/obstacle.avif'; // Replace with your obstacle image
 
+
 // Game variables
-let horseX = 100;
-let horseY = canvas.height - 180;  // Adjusted start height
+let horseX = canvas.width * 0.1;
+let horseY = canvas.height - 80;
 let isJumping = false;
 let jumpVelocity = 0;
 let gravity = 0.4;
@@ -18,57 +28,63 @@ let obstacles = [];
 let obstacleSpeed = 2;
 let gameSpeedIncrement = 0.01;
 let gameOver = false;
-let jumpBoost = -10; // Balanced jump boost
-let canDoubleJump = true; // Allow one extra jump mid-air
+let jumpBoost = -10;
+let canDoubleJump = true;
 
-// Key events for jumping with limited stacking
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && !gameOver) {
+// Handle jump controls for both keyboard and touch
+function jump() {
+  if (!gameOver) {
     if (!isJumping) {
       isJumping = true;
       jumpVelocity = jumpBoost;
     } else if (canDoubleJump) {
       jumpVelocity = jumpBoost;
-      canDoubleJump = false; // Allow one extra jump mid-air
+      canDoubleJump = false; // Allow only one mid-air jump
     }
   }
+}
+
+// Add both keyboard and touch controls
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') jump();
 });
+canvas.addEventListener('touchstart', jump);
 
 // Function to handle horse movement
 function updateHorse() {
   if (isJumping) {
     horseY += jumpVelocity;
     jumpVelocity += gravity;
-    if (horseY >= canvas.height - 180) {
-      horseY = canvas.height - 180;
+    if (horseY >= canvas.height - 80) {
+      horseY = canvas.height - 80;
       isJumping = false;
-      canDoubleJump = true; // Reset double jump when landed
+      canDoubleJump = true;
     }
   }
 }
 
-// Generate obstacles with variable height for realism
+// Generate obstacles with adjusted size for mobile
 function generateObstacle() {
   let obstacleX = canvas.width;
-  let obstacleY = canvas.height - 100;
+  let obstacleY = canvas.height - 60;
   obstacles.push({ x: obstacleX, y: obstacleY });
 }
 
-// Update obstacles with parallax effect
+// Update obstacles and check for collisions
 function updateObstacles() {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     obstacles[i].x -= obstacleSpeed;
-    if (obstacles[i].x + 60 < 0) { // Clear obstacle when off screen
+    if (obstacles[i].x + 40 < 0) { // Reduced obstacle size for mobile
       obstacles.splice(i, 1);
       score++;
-      if (score % 5 === 0) obstacleSpeed += gameSpeedIncrement; // Increment speed
+      if (score % 5 === 0) obstacleSpeed += gameSpeedIncrement;
     }
 
-    // Check collision with realistic sizes
+    // Check collision
     if (
-      horseX + 100 > obstacles[i].x &&  // Adjusted horse width
-      horseX < obstacles[i].x + 50 &&   // Adjusted obstacle width
-      horseY + 100 > obstacles[i].y     // Adjusted horse height
+      horseX + 80 > obstacles[i].x &&
+      horseX < obstacles[i].x + 40 &&
+      horseY + 80 > obstacles[i].y
     ) {
       gameOver = true;
       document.getElementById('restartButton').style.display = 'block';
@@ -76,20 +92,16 @@ function updateObstacles() {
     }
   }
 
-  if (Math.random() < 0.01) {
+  if (Math.random() < 0.02) {
     generateObstacle();
   }
 }
 
-// Draw function with optimized rendering and background parallax
+// Draw function with responsive size
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Draw horse
-  ctx.drawImage(horseImg, horseX, horseY, 100, 100);
-
-  // Draw obstacles
-  obstacles.forEach((obstacle) => ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, 50, 50));
+  ctx.drawImage(horseImg, horseX, horseY, 80, 80);
+  obstacles.forEach((obstacle) => ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, 40, 40));
 
   // Draw score
   ctx.font = '20px Arial';
@@ -97,7 +109,7 @@ function draw() {
   ctx.fillText('Score: ' + score, 10, 20);
 }
 
-// Game loop
+// Game loop with optimized frame rate for mobile
 function gameLoop() {
   if (!gameOver) {
     updateHorse();
@@ -109,8 +121,7 @@ function gameLoop() {
 
 // Restart the game
 function restartGame() {
-  // Reset game variables
-  horseY = canvas.height - 180;
+  horseY = canvas.height - 80;
   isJumping = false;
   jumpVelocity = 0;
   score = 0;
