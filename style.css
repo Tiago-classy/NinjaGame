@@ -1,32 +1,31 @@
 body, html {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: #FFFFFF; /* Set background to white */
-  }
-  
-  .game-container {
-    position: relative;
-    border: 2px solid #333;
-  }
-  
-  canvas {
-    background: #FFFFFF; /* Canvas also has a white background */
-  }
-  
-  #restartButton {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #f0f0f0; /* Slightly off-white for visual comfort */
+}
+
+.game-container {
+  position: relative;
+  border: 2px solid #333;
+}
+
+canvas {
+  background-color: white;
+}
+
+#restartButton {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
